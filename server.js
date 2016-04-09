@@ -31,7 +31,7 @@ app.get('/app/todos', function(req, res) {
 
 app.post('/app/todos', function(req, res){
     console.log("REQ.BODY", req.body)
-    Todo.create({item : req.body.item,done : false }, function (err, todo){
+    Todo.create({item : req.body.text, done : false }, function (err, todo){
         if (err) {
           res.send(err);
         }
