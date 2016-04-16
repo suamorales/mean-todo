@@ -21,12 +21,13 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 app.get('/app/todos', function(req, res) {
-    Todo.find(function(err, todos){
+    var isDone = req.query.done || false;
+    Todo.find({}).where('done').equals(isDone).exec(function(err, todos){
         if (err) {
             res.send(err);
         }
         res.json(todos);
-    });
+    })
 });
 
 app.post('/app/todos', function(req, res){
@@ -43,6 +44,10 @@ app.post('/app/todos', function(req, res){
             res.json(todos);
         });   
     });
+});
+
+app.delete('app/todo/{id}', function(req, res) {
+    Todo.find({ id:id }).remove().exec()
 });
 
 

@@ -1,54 +1,99 @@
 <!doctype html>
 <html ng-app="todo">
 <head>
-    <title>My first complete app!</title>
+    <title>List of Todos</title>
     <meta charset="utf-8">
 
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel='stylesheet' href='layout.css'>
+    
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
-    <script src="app.js"></script>
-</head>
+          <!-- Angular Material requires Angular.js Libraries -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+      <!-- Angular Material Library -->
+      <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+      <script src="app.js"></script>
+    </head>
 
 <body ng-controller="mainCtrl">
-    <div class="container">
+   <div>
+    
+    <div layout="column">
 
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
-            <h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+  
+
+        <md-toolbar layout-fill>
+            <div class="md-toolbar-tools">
+          
+            <div><h1>I'm a Todo-aholic: <span>{{ todos.length || 0 }}</span></h1></div>
+           <span flex></span>
+              
+        <div>
+        
+        <md-button class="md-secondary md-raised" type="submit" ng-click="createTodo()">Add</md-button>
+        </div>
+      
+        <div>
+          <md-input-container>
+                  <input type="text" placeholder="Enter Todo" ng-model="formData.text">
+          </md-input-container>
         </div>
 
-        <!-- TODO LIST -->
-        <div id="todo-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
+          </div>
+        </md-toolbar>
 
-                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
-                    <label>
-                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.item }}
-                    </label>
-                </div>
 
+
+      <div layout="row">
+
+        <md-card flex="25">
+        <md-card-header>
+          <md-card-header-text><md-title>TODO</md-title></md-card-header-text>
+        </md-card-header>
+          <md-content>
+            <div ng-repeat="todo in todos">
+              <md-checkbox ng-model="todo.done"> 
+                {{todo.item}}
+              </md-checkbox>
             </div>
-        </div>
+          </md-content>
+        </md-card>
 
-        <!-- FORM TO CREATE TODOS -->
-        <div id="todo-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
-
-                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-                    </div>
-
-                    <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-                </form>
+      <md-card flex="20">
+        <md-card-header>
+          <md-card-header-text><md-title>DONE</md-title></md-card-header-text>
+        </md-card-header>
+          <md-content>
+            <div ng-repeat="todo in doneTodos">
+              <md-checkbox ng-model="todo.done"> 
+                {{todo.item}}
+              </md-checkbox>
             </div>
-        </div>
+          </md-content>
+        </md-card>
 
     </div>
+  
+      
+
+        
+
+        <!-- FORM TO CREATE TODOS -->
+        <!-- <div id="todo-form" class="row">
+            <div>
+                <form>
+                   
+                </form>
+            </div>
+        </div> -->
+
+    </div>
+
+
 </body>
 </html> 

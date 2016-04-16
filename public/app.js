@@ -1,13 +1,20 @@
-var app = angular.module('todo', []);
+var app = angular.module('todo', ['ngMaterial']);
+
 
 app.controller('mainCtrl', ['$scope', '$http',  function ($scope, $http) {
+	
 	$scope.formData = {};
 
-	console.log("HIS THIS RUNNING");
-	
 	$http.get('/app/todos').then(function (data){
-		$scope.todos = data;
-		console.log("data:", data);
+		$scope.todos = data.data;
+		console.log("data:", data.data, $scope.todos.length);
+	}, function (err){
+		console.log("ERROR", error)
+	});
+
+	$http.get('/app/todos?done=true').then(function (data){
+		$scope.doneTodos = data.data;
+		console.log("data:", data.data, $scope.doneTodos.length);
 	}, function (err){
 		console.log("ERROR", error)
 	});
