@@ -20,9 +20,9 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-app.get('/app/todos', function(req, res) {
+app.get('/app/todos', function (req, res) {
     var isDone = req.query.done || false;
-    Todo.find({}).where('done').equals(isDone).exec(function(err, todos){
+    Todo.find({}).where('done').equals(isDone).exec(function (err, todos){
         if (err) {
             res.send(err);
         }
@@ -30,24 +30,53 @@ app.get('/app/todos', function(req, res) {
     })
 });
 
-app.post('/app/todos', function(req, res){
+app.get('/app/todo/:_id', function (req, res) {
+    console.dir(Todo)
+    var isDone = req.query.done || false;
+    console.log('STEP ONE COMPLETE')
+    Todo.find({_id:req.params._id}).where('done').equals(isDone).exec(function (err, todos){
+        console.log('STEP TWO')
+        if (err) {
+            res.send(err);
+        }
+        res.json(todos);
+        console.log('STEP THREE')
+    })
+});
+
+app.post('/app/todos', function (req, res){
     console.log("REQ.BODY", req.body)
-    Todo.create({item : req.body.text, done : false }, function (err, todo){
+    Todo.create({item : req.body.text, done : false }, function (err, todo) {
         if (err) {
           res.send(err);
         }
-
-        Todo.find(function(err, todos) {
+        Todo.find().where('done').equals(false).exec(function (err, todos) {
             if (err) {
               res.send(err);
             }
+            console.log("NEW TODOS", todos)
             res.json(todos);
         });   
+
     });
 });
 
-app.delete('app/todo/{id}', function(req, res) {
-    Todo.find({ id:id }).remove().exec()
+app.delete('/app/todos/:_id', function (req, res) {
+    Todo.findById({ _id:req.params._id }).remove().exec() //make sure to check for errors
+});
+
+app.put('/app/todo/:_id', function (req, res) {
+
+        var id = req.params._id;
+        var newItem = req.body.item;
+        var newDone  = req.body.done;
+
+        Todo.findByIdAndUpdate(id, {item: newItem, done:newDone }, null, function (err, newTodo) {
+            console.log('ERR', err)
+            console.log('RES', newTodo)
+            res.status = 200;
+            res.json(newTodo || req.body);
+        })
 });
 
 

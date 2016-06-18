@@ -34,10 +34,8 @@
            <span flex></span>
               
         <div>
-        
         <md-button class="md-secondary md-raised" type="submit" ng-click="createTodo()">Add</md-button>
         </div>
-      
         <div>
           <md-input-container>
                   <input type="text" placeholder="Enter Todo" ng-model="formData.text">
@@ -48,7 +46,6 @@
         </md-toolbar>
 
 
-
       <div layout="row">
 
         <md-card flex="25">
@@ -57,7 +54,7 @@
         </md-card-header>
           <md-content>
             <div ng-repeat="todo in todos">
-              <md-checkbox ng-model="todo.done"> 
+              <md-checkbox ng-click="markAsDone()" ng-model="todo.done"> 
                 {{todo.item}}
               </md-checkbox>
             </div>
@@ -70,28 +67,13 @@
         </md-card-header>
           <md-content>
             <div ng-repeat="todo in doneTodos">
-              <md-checkbox ng-model="todo.done"> 
+              <md-checkbox class="checked" ng-model="todo.done" disabled> 
                 {{todo.item}}
               </md-checkbox>
             </div>
           </md-content>
         </md-card>
-
     </div>
-  
-      
-
-        
-
-        <!-- FORM TO CREATE TODOS -->
-        <!-- <div id="todo-form" class="row">
-            <div>
-                <form>
-                   
-                </form>
-            </div>
-        </div> -->
-
     </div>
 
 
