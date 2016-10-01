@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 
 // config
-mongoose.connect('127.0.0.1');
+mongoose.connect('192.168.99.100');
 var schema = new mongoose.Schema({ item: 'string', done: Boolean});
 var Todo = mongoose.model('todo', schema);
 
