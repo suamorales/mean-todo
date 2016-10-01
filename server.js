@@ -22,7 +22,7 @@ app.use(methodOverride());
 
 app.get('/app/todos', function (req, res) {
     var isDone = req.query.done || false;
-    Todo.find({}).where('done').equals(isDone).exec(function (err, todos){
+    Todo.find({}).exec(function (err, todos){
         if (err) {
             res.send(err);
         }
@@ -31,16 +31,11 @@ app.get('/app/todos', function (req, res) {
 });
 
 app.get('/app/todo/:_id', function (req, res) {
-    console.dir(Todo)
-    var isDone = req.query.done || false;
-    console.log('STEP ONE COMPLETE')
-    Todo.find({_id:req.params._id}).where('done').equals(isDone).exec(function (err, todos){
-        console.log('STEP TWO')
+    Todo.find({_id:req.params._id}).exec(function (err, todos){
         if (err) {
             res.send(err);
         }
         res.json(todos);
-        console.log('STEP THREE')
     })
 });
 
@@ -68,14 +63,28 @@ app.delete('/app/todos/:_id', function (req, res) {
 app.put('/app/todo/:_id', function (req, res) {
 
         var id = req.params._id;
-        var newItem = req.body.item;
-        var newDone  = req.body.done;
 
-        Todo.findByIdAndUpdate(id, {item: newItem, done:newDone }, null, function (err, newTodo) {
-            console.log('ERR', err)
-            console.log('RES', newTodo)
-            res.status = 200;
-            res.json(newTodo || req.body);
+        console.log("req.params.item", req.params.item)
+        console.log("req.body.item", req.body.item)
+        console.log("res", res)
+
+        var updatedObject = {};
+
+        if (req.body.item) updatedObject.item = req.body.item;
+        if (req.body.done) updatedObject.done = req.body.done
+        console.log("##############################");
+
+        console.log("##############################");
+
+
+        Todo.findByIdAndUpdate(id, updatedObject, {}, function (err, newTodo) {
+            if (err){
+              console.log("ERROR", err)
+            } else {
+                console.log("newTodo", newTodo)
+                res.status = 200;
+                res.json(newTodo.id);
+            }
         })
 });
 

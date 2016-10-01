@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
-    <link rel='stylesheet' href='layout.css'>
+    <link rel='stylesheet' href='./layout.css'>
     
 
           <!-- Angular Material requires Angular.js Libraries -->
@@ -29,10 +29,8 @@
 
         <md-toolbar layout-fill>
             <div class="md-toolbar-tools">
-          
-            <div><h1>I'm a Todo-aholic: <span>{{ todos.length || 0 }}</span></h1></div>
+            <div><h1> Dashboard Overview: <span>{{ (todos | filter:{done:false}).length || 0}} Remaining</span></h1></div>
            <span flex></span>
-              
         <div>
         <md-button class="md-secondary md-raised" type="submit" ng-click="createTodo()">Add</md-button>
         </div>
@@ -44,17 +42,14 @@
 
           </div>
         </md-toolbar>
-
-
       <div layout="row">
-
         <md-card flex="25">
-        <md-card-header>
+        <md-card-header class="header notdone">
           <md-card-header-text><md-title>TODO</md-title></md-card-header-text>
         </md-card-header>
           <md-content>
-            <div ng-repeat="todo in todos">
-              <md-checkbox ng-click="markAsDone()" ng-model="todo.done"> 
+            <div ng-repeat="todo in todos | filter:{done:false}" layout-margin>
+              <md-checkbox ng-submit="markAsDone(this)"> 
                 {{todo.item}}
               </md-checkbox>
             </div>
@@ -62,12 +57,12 @@
         </md-card>
 
       <md-card flex="20">
-        <md-card-header>
+        <md-card-header class="header done">
           <md-card-header-text><md-title>DONE</md-title></md-card-header-text>
         </md-card-header>
           <md-content>
-            <div ng-repeat="todo in doneTodos">
-              <md-checkbox class="checked" ng-model="todo.done" disabled> 
+            <div ng-repeat="todo in todos | filter:{done:true}" layout-margin>
+              <md-checkbox class="checked" ng-model="todo.done" disabled>
                 {{todo.item}}
               </md-checkbox>
             </div>
@@ -75,7 +70,5 @@
         </md-card>
     </div>
     </div>
-
-
 </body>
 </html> 
