@@ -1,7 +1,80 @@
-.header.notdone{
+.card {
+  box-shadow: 0 3px 6px 
+rgba(0,0,0,0.16), 0 3px 6px 
+rgba(0,0,0,0.23);
+}
+
+.card-header {
+  color: white;
+}
+
+.card-header.notdone {
 	background-color: #F44336;
 }
 
-.header.done{
-	background-color: #4CAF50;
+.card-header.done {
+	background-color: #172540;
+}
+
+.info {
+  z-index: 10;
+  position: absolute;
+  right: 14%;
+  top: 21%;
+}
+
+.toolbar {
+	font-family: 'Rubik', sans-serif;
+}
+
+.toolbar.light {
+	background-color: #4177a1;
+}
+
+.toolbar.dark {
+	background-color: #172540;
+}
+
+.toolbar.small {
+	max-height:10px;
+}
+
+.strikethrough {
+	display: inline-block;
+	position: relative;
+}
+
+.strikethrough:after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 2px;
+	margin-top: -0.7em;
+	background: black;
+	transform-origin: center left;
+	/*animation: strikethrough 10s 0.5s;*/
+	animation-name: strikethrough;
+    animation-duration: .3s;
+	cubic-bezier(.55, 0, .1, 1) 1; 
+		transition: transform 0.5s cubic-bezier(.55, 0, .1, 1);
+}
+
+.strikethrough:hover:after {
+		transform: scaleX(0);
+		transform-origin: center right;
+}
+
+/* keyframes for strikethrough */ 
+@-webkit-keyframes strikethrough{
+	from {
+		transform: scaleX(0);
+	} 
+	to {
+		transform: scaleX(1);
+	}
+}
+
+.icon-spacing-right {
+	padding-right:15px;
 }

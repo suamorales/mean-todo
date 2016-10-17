@@ -1,74 +1,89 @@
 <!doctype html>
 <html ng-app="todo">
 <head>
-    <title>List of Todos</title>
-    <meta charset="utf-8">
+<title>List of Todos</title>
+<meta charset="utf-8">
 
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
-    <link rel='stylesheet' href='./layout.css'>
-    
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+<link rel='stylesheet' href='./layout.css'>
+<link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700" rel="stylesheet">
 
-          <!-- Angular Material requires Angular.js Libraries -->
-      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+      <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
 
-      <!-- Angular Material Library -->
-      <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-      <script src="app.js"></script>
-    </head>
-
-<body ng-controller="mainCtrl">
-   <div>
-    
-    <div layout="column">
-
-  
-
-        <md-toolbar layout-fill>
-            <div class="md-toolbar-tools">
-            <div><h1> Dashboard Overview: <span>{{ (todos | filter:{done:false}).length || 0}} Remaining</span></h1></div>
-           <span flex></span>
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="mainCtrl" layout="column">
+  <div class="toolbar dark small" flex="5"></div>
+    <md-toolbar>
+      <div class="md-toolbar-tools toolbar light">
         <div>
-        <md-button class="md-secondary md-raised" type="submit" ng-click="createTodo()">Add</md-button>
-        </div>
-        <div>
-          <md-input-container>
-                  <input type="text" placeholder="Enter Todo" ng-model="formData.text">
-          </md-input-container>
-        </div>
-
-          </div>
-        </md-toolbar>
-      <div layout="row">
-        <md-card flex="25">
-        <md-card-header class="header notdone">
-          <md-card-header-text><md-title>TODO</md-title></md-card-header-text>
-        </md-card-header>
-          <md-content>
-            <div ng-repeat="todo in todos | filter:{done:false}" layout-margin>
-              <md-checkbox ng-submit="markAsDone(this)"> 
-                {{todo.item}}
-              </md-checkbox>
+          <h1>
+            <div layout="row" layout-margin>
+              <i class="material-icons">list</i>
+              <span>OVERVIEW</span>
             </div>
-          </md-content>
-        </md-card>
-
-      <md-card flex="20">
-        <md-card-header class="header done">
-          <md-card-header-text><md-title>DONE</md-title></md-card-header-text>
-        </md-card-header>
-          <md-content>
-            <div ng-repeat="todo in todos | filter:{done:true}" layout-margin>
-              <md-checkbox class="checked" ng-model="todo.done" disabled>
-                {{todo.item}}
-              </md-checkbox>
+            <!-- DASHBOARD : <span>{{ (todos | filter:{done:false}).length || 0}} Remaining</span> -->
+          </h1>
+        </div>
+          <span flex></span>
+            <div>
+              <md-button class="md-secondary md-raised" type="submit" ng-click="createTodo()">Add</md-button>
             </div>
-          </md-content>
-        </md-card>
+          <div>
+            <md-input-container>
+              <form ng-submit="createTodo()">
+                <input type="text" placeholder="Enter Todo" ng-model="formData.text">
+              </form>
+            </md-input-container>
+        </div>
+      </div>
+    </md-toolbar>
+
+    <div layout="row" layout-align="space-around">
+      <md-card flex="25" class="card">
+        <md-card-header class="card-header notdone">
+          <md-card-header-text layout="row" layout-align="start center">
+          <i class="material-icons icon-spacing-right">access_time</i>
+          <span>LATER<span>
+        </md-card-header-text>
+        </md-card-header>
+      <span class="info">Hello</span>
+      <span class="tab"></span>
+      <md-card-content>
+        <div ng-repeat="todo in todos | filter:{done:false}" layout-margin>
+          <md-checkbox ng-submit="markAsDone(this)" ng-model="checked"> 
+            <span ng-class="{'strikethrough':checked}">{{todo.item}}</span>
+          </md-checkbox>
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <md-card flex="25" class="card">
+      <md-card-header class="card-header done">
+      <md-card-header-text layout="row" layout-align="start center">
+         <i class="material-icons icon-spacing-right">access_time</i>
+         <span>DONE</span>
+      </md-card-header-text>
+      </md-card-header>
+      <span class="info">Hello</span>
+      <span class="tab"></span>
+
+      <md-card-content>
+        <div ng-repeat="todo in todos | filter:{done:true}" layout-margin>
+          <md-checkbox class="checked" ng-model="todo.done" disabled>{{todo.item}}</md-checkbox>
+        </div>
+      </md-card-content>
+    </md-card>
     </div>
-    </div>
+
 </body>
 </html> 
